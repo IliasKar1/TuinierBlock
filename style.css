@@ -1,0 +1,28 @@
+/*
+Theme Name: Tuinierwinkel Blocks
+Theme URI: https://detuinierwinkel.nl
+Author: Daan (web-dev-agent)
+Description: Custom block theme (FSE) voor deTuinierwinkel.nl. Vervangt Flatsome + Elementor. Design-richting: Lush Maximalism + Scrollytelling. WooCommerce-compatibel. Asset-light pilot — start met productpagina-template.
+Version: 0.1.0-alpha
+Requires at least: 6.6
+Tested up to: 7.0
+Requires PHP: 8.1
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tuinierwinkel-blocks
+Tags: full-site-editing, block-styles, woocommerce, e-commerce
+*/
+
+html { scroll-behavior: smooth; }
+
+@supports (animation-timeline: view()) {
+  .twb-fade-in-on-scroll {
+    animation: twb-fade-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+  @keyframes twb-fade-in {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}

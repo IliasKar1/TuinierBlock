@@ -1,0 +1,132 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained","contentSize":"1200px"}} -->
+<main class="wp-block-group">
+
+	<!-- HERO — full-width split: gallery links, title+price+CTA rechts -->
+	<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|60"}}},"layout":{"type":"default"}} -->
+	<div class="wp-block-group alignwide" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60)">
+
+		<!-- wp:columns {"verticalAlignment":"top","style":{"spacing":{"blockGap":{"top":"0","left":"var:preset|spacing|50"}}}} -->
+		<div class="wp-block-columns are-vertically-aligned-top">
+
+			<!-- wp:column {"verticalAlignment":"top","width":"58%"} -->
+			<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:58%">
+				<!-- wp:woocommerce/product-image-gallery /-->
+			</div>
+			<!-- /wp:column -->
+
+			<!-- wp:column {"verticalAlignment":"top","width":"42%","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","left":"var:preset|spacing|30"}}}} -->
+			<div class="wp-block-column is-vertically-aligned-top" style="padding-top:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30);flex-basis:42%">
+
+				<!-- wp:paragraph {"fontSize":"sm","textColor":"terracotta","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.12em","fontWeight":"600"}}} -->
+				<p class="has-terracotta-color has-text-color has-small-font-size" style="font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:0.12em">Op voorraad · Gratis bezorging</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:post-title {"level":1,"fontFamily":"fraunces","fontSize":"3xl","style":{"typography":{"lineHeight":"1.05","letterSpacing":"-0.02em","fontWeight":"500"},"spacing":{"margin":{"top":"0.25rem","bottom":"1rem"}}}} /-->
+
+				<!-- wp:woocommerce/product-price {"isDescendentOfQueryLoop":false,"style":{"typography":{"fontSize":"1.875rem","fontWeight":"600"}},"fontFamily":"manrope"} /-->
+
+				<!-- wp:separator {"backgroundColor":"fern","className":"is-style-wide","style":{"spacing":{"margin":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}}} -->
+				<hr class="wp-block-separator has-text-color has-fern-color has-alpha-channel-opacity has-fern-background-color has-background is-style-wide" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30)"/>
+				<!-- /wp:separator -->
+
+				<!-- wp:woocommerce/product-summary {"isDescendentOfQueryLoop":false,"showDescriptionIfEmpty":true,"showLink":false,"summaryLength":40,"fontSize":"lg"} /-->
+
+				<!-- wp:woocommerce/add-to-cart-form /-->
+
+				<!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|40"},"padding":{"top":"var:preset|spacing|30"}},"border":{"top":{"color":"var:preset|color|fern","width":"1px"}}},"layout":{"type":"default"}} -->
+				<div class="wp-block-group" style="border-top-color:var(--wp--preset--color--fern);border-top-width:1px;margin-top:var(--wp--preset--spacing--40);padding-top:var(--wp--preset--spacing--30)">
+					<!-- wp:paragraph {"fontSize":"sm","style":{"typography":{"lineHeight":"1.9"}}} -->
+					<p class="has-small-font-size" style="line-height:1.9"><strong style="color:#C0633D">—</strong>&nbsp;&nbsp;Eigen bezorging binnen 2-5 werkdagen<br><strong style="color:#C0633D">—</strong>&nbsp;&nbsp;WhatsApp-advies van 9 tot 22 uur<br><strong style="color:#C0633D">—</strong>&nbsp;&nbsp;Vijf jaar garantie op alle modellen</p>
+					<!-- /wp:paragraph -->
+				</div>
+				<!-- /wp:group -->
+
+				<!-- wp:woocommerce/product-meta /-->
+			</div>
+			<!-- /wp:column -->
+
+		</div>
+		<!-- /wp:columns -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- VERHAAL SECTIE 1 — Het ontwerp -->
+	<!-- wp:group {"align":"full","backgroundColor":"cream","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"className":"twb-fade-in-on-scroll","layout":{"type":"constrained","contentSize":"720px"}} -->
+	<div class="wp-block-group alignfull twb-fade-in-on-scroll has-cream-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
+
+		<!-- wp:paragraph {"align":"center","fontSize":"sm","textColor":"terracotta","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.22em","fontWeight":"600"}}} -->
+		<p class="has-text-align-center has-terracotta-color has-text-color has-small-font-size" style="font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:0.22em">Hoofdstuk 1 — Het ontwerp</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:heading {"textAlign":"center","level":2,"fontFamily":"fraunces","fontSize":"3xl","textColor":"forest"} -->
+		<h2 class="wp-block-heading has-text-align-center has-forest-color has-text-color has-fraunces-font-family has-3-xl-font-size">Gebouwd om te blijven staan</h2>
+		<!-- /wp:heading -->
+
+		<!-- wp:paragraph {"align":"center","fontSize":"lg","style":{"typography":{"lineHeight":"1.6"},"spacing":{"margin":{"top":"var:preset|spacing|30"}}}} -->
+		<p class="has-text-align-center has-large-font-size" style="margin-top:var(--wp--preset--spacing--30);line-height:1.6">Stalen frame, polycarbonaat platen, geanodiseerd aluminium. Elk onderdeel is gekozen om twintig Nederlandse winters door te komen — niet om er goed uit te zien op een rendering.</p>
+		<!-- /wp:paragraph -->
+
+	</div>
+	<!-- /wp:group -->
+
+	<!-- VERHAAL SECTIE 2 — Het seizoen — paper bg met grote serif heading + terracotta accent -->
+	<!-- wp:group {"align":"full","backgroundColor":"paper","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"className":"twb-fade-in-on-scroll","layout":{"type":"constrained","contentSize":"820px"}} -->
+	<div class="wp-block-group alignfull twb-fade-in-on-scroll has-paper-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
+
+		<!-- wp:paragraph {"align":"center","fontSize":"sm","textColor":"terracotta","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.22em","fontWeight":"600"}}} -->
+		<p class="has-text-align-center has-terracotta-color has-text-color has-small-font-size" style="font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:0.22em">Hoofdstuk 2 — Door het seizoen</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:heading {"textAlign":"center","level":2,"fontFamily":"fraunces","fontSize":"4xl","textColor":"forest","style":{"spacing":{"margin":{"top":"var:preset|spacing|30"}}}} -->
+		<h2 class="wp-block-heading has-text-align-center has-forest-color has-text-color has-fraunces-font-family has-display-font-size" style="margin-top:var(--wp--preset--spacing--30)">Februari tot november.<br>Eén plek voor alles.</h2>
+		<!-- /wp:heading -->
+
+		<!-- wp:group {"layout":{"type":"flex","justifyContent":"center"}} -->
+		<div class="wp-block-group">
+			<!-- wp:separator {"backgroundColor":"terracotta","style":{"spacing":{"margin":{"top":"var:preset|spacing|40"}}}} -->
+			<hr class="wp-block-separator has-text-color has-terracotta-color has-alpha-channel-opacity has-terracotta-background-color has-background" style="margin-top:var(--wp--preset--spacing--40)"/>
+			<!-- /wp:separator -->
+		</div>
+		<!-- /wp:group -->
+
+	</div>
+	<!-- /wp:group -->
+
+	<!-- VERHAAL SECTIE 3 — Specs in serene grid -->
+	<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"className":"twb-fade-in-on-scroll","layout":{"type":"default"}} -->
+	<div class="wp-block-group alignwide twb-fade-in-on-scroll" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
+
+		<!-- wp:paragraph {"align":"center","fontSize":"sm","textColor":"terracotta","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.22em","fontWeight":"600"}}} -->
+		<p class="has-text-align-center has-terracotta-color has-text-color has-small-font-size" style="font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:0.22em">Hoofdstuk 3 — Specificaties</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:heading {"textAlign":"center","level":2,"fontFamily":"fraunces","fontSize":"3xl","textColor":"forest"} -->
+		<h2 class="wp-block-heading has-text-align-center has-forest-color has-text-color has-fraunces-font-family has-3-xl-font-size">De technische details</h2>
+		<!-- /wp:heading -->
+
+		<!-- wp:woocommerce/product-details /-->
+
+	</div>
+	<!-- /wp:group -->
+
+	<!-- RELATED — bento-grid -->
+	<!-- wp:group {"align":"full","backgroundColor":"paper","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
+	<div class="wp-block-group alignfull has-paper-background-color has-background" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
+		<!-- wp:paragraph {"align":"center","fontSize":"sm","textColor":"terracotta","style":{"typography":{"textTransform":"uppercase","letterSpacing":"0.22em","fontWeight":"600"}}} -->
+		<p class="has-text-align-center has-terracotta-color has-text-color has-small-font-size" style="font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:0.22em">Verder kijken</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:heading {"textAlign":"center","level":2,"fontFamily":"fraunces","fontSize":"2xl","textColor":"forest"} -->
+		<h2 class="wp-block-heading has-text-align-center has-forest-color has-text-color has-fraunces-font-family has-2-xl-font-size">Anderen kozen ook</h2>
+		<!-- /wp:heading -->
+
+		<!-- wp:woocommerce/related-products /-->
+	</div>
+	<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
