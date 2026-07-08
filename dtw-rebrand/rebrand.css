@@ -1,0 +1,152 @@
+/* ============================================================
+   DTW Rebrand v0 — header/footer over Flatsome heen
+   Richting: hybride B×C (forest hoofdbalk + zoekbalk) + footer 1
+   Beheerd via Git (TuinierBlock, branch mu-plugins). v0 = kleur/typo-pass;
+   structurele herbouw (zoekbalk-center, iconlabels, footerkolommen) volgt
+   in v1 via PHP-hooks zodra de deploy-pipeline bevestigd is.
+   ============================================================ */
+
+:root {
+  --dtw-forest: #1F3D2B;
+  --dtw-forest-2: #3F6B4A;
+  --dtw-sage: #8DAE7E;
+  --dtw-terracotta: #C0633D;
+  --dtw-mustard: #D9A441;
+  --dtw-cream: #F4EFE2;
+  --dtw-paper: #FBF8F1;
+  --dtw-ink: #1A1A1A;
+  --dtw-font-serif: 'Fraunces', Georgia, serif;
+  --dtw-font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---------- basis-typografie ---------- */
+body { font-family: var(--dtw-font-sans); }
+h1, h2, h3, .section-title span { font-family: var(--dtw-font-serif) !important; letter-spacing: -0.02em; }
+
+/* ---------- microbar (Flatsome #top-bar) ---------- */
+#top-bar {
+  background-color: var(--dtw-cream) !important;
+  border-bottom: 1px solid rgba(31, 61, 43, 0.12);
+}
+#top-bar .html, #top-bar p, #top-bar span, #top-bar a {
+  color: var(--dtw-forest) !important;
+  font-family: var(--dtw-font-sans) !important;
+  font-size: 11.5px !important;
+  letter-spacing: 0.04em;
+}
+#top-bar strong { color: var(--dtw-terracotta) !important; }
+
+/* ---------- hoofdbalk (forest) ---------- */
+.header-main {
+  background-color: var(--dtw-forest) !important;
+}
+.header-main .nav > li > a,
+.header-main .header-button,
+.header-main a,
+.header-main .icon-search,
+.header-main .icon-user,
+.header-main .icon-heart,
+.header-main .icon-shopping-basket,
+.header-main .cart-icon strong,
+.header-main .header-cart-title,
+.header-main .header-account-title,
+.header-main .header-wishlist-title {
+  color: var(--dtw-cream) !important;
+}
+.header-main .cart-icon strong { border-color: var(--dtw-cream) !important; }
+.header-main .cart-icon strong:after { border-color: var(--dtw-cream) !important; }
+.header-main .nav > li > a:hover { color: var(--dtw-mustard) !important; }
+.header-main .cart-item .cart-icon .cart-count,
+.header-main .badge-container .badge,
+.header-main .cart-basket-count {
+  background-color: var(--dtw-mustard) !important;
+  color: var(--dtw-forest) !important;
+}
+/* interim-logo: oud SVG monochroom licht tot het nieuwe logo er is (MM-traject) */
+.header-main .header-logo img,
+.header-main .header_logo {
+  filter: brightness(0) saturate(100%) invert(94%) sepia(9%) saturate(346%) hue-rotate(357deg) brightness(103%);
+}
+
+/* zoekveld in de hoofdbalk (Flatsome search) */
+.header-main .searchform .search-field,
+.header-main .search-field {
+  background: var(--dtw-paper) !important;
+  border: 0 !important;
+  border-radius: 999px 0 0 999px !important;
+  font-family: var(--dtw-font-sans) !important;
+  color: var(--dtw-ink) !important;
+}
+.header-main .searchform .submit-button,
+.header-main .searchform button[type="submit"] {
+  background: var(--dtw-mustard) !important;
+  color: var(--dtw-forest) !important;
+  border: 0 !important;
+  border-radius: 0 999px 999px 0 !important;
+}
+
+/* ---------- nav-rij (header-bottom, cream) ---------- */
+.header-bottom {
+  background-color: var(--dtw-cream) !important;
+  border-bottom: 1px solid rgba(31, 61, 43, 0.12);
+}
+.header-bottom .nav > li > a {
+  color: var(--dtw-forest) !important;
+  font-family: var(--dtw-font-sans) !important;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+}
+.header-bottom .nav > li > a:hover { color: var(--dtw-terracotta) !important; }
+.header-bottom .nav > li.current-menu-item > a { color: var(--dtw-terracotta) !important; }
+
+/* dropdowns */
+.nav-dropdown {
+  background: var(--dtw-paper) !important;
+  border: 1px solid rgba(31, 61, 43, 0.14) !important;
+  border-radius: 10px;
+  font-family: var(--dtw-font-sans);
+}
+.nav-dropdown a { color: var(--dtw-forest) !important; }
+.nav-dropdown a:hover { color: var(--dtw-terracotta) !important; }
+
+/* sticky header behoudt forest */
+.header.show-on-scroll .header-main,
+.stuck .header-main { background-color: var(--dtw-forest) !important; }
+
+/* ---------- mobiel menu (off-canvas) ---------- */
+.off-canvas .mobile-sidebar-slide,
+.mobile-sidebar {
+  background-color: var(--dtw-paper) !important;
+}
+.mobile-sidebar .nav > li > a { color: var(--dtw-forest) !important; font-family: var(--dtw-font-sans) !important; }
+
+/* ---------- footer (forest editorial, v0 kleur-pass) ---------- */
+footer.footer-wrapper, .footer-wrapper { background-color: var(--dtw-forest) !important; }
+.footer-widgets, .footer { background-color: var(--dtw-forest) !important; color: var(--dtw-cream) !important; }
+.footer-widgets .widget-title, .footer h3, .footer h4, .footer strong {
+  color: var(--dtw-mustard) !important;
+  font-family: var(--dtw-font-sans) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.footer-widgets a, .footer-widgets p, .footer-widgets li, .footer a, .footer p {
+  color: rgba(244, 239, 226, 0.87) !important;
+  font-family: var(--dtw-font-sans);
+}
+.footer-widgets a:hover, .footer a:hover { color: var(--dtw-mustard) !important; }
+.absolute-footer {
+  background-color: #18301F !important;
+  color: rgba(244, 239, 226, 0.6) !important;
+  font-family: var(--dtw-font-sans);
+}
+.absolute-footer a { color: rgba(244, 239, 226, 0.6) !important; }
+
+/* ---------- knoppen site-breed naar huisstijl ---------- */
+.button.primary:not(.is-outline), button[type="submit"].primary {
+  background-color: var(--dtw-forest) !important;
+  border-radius: 999px !important;
+  font-family: var(--dtw-font-sans);
+}
+.button.primary:not(.is-outline):hover { background-color: var(--dtw-terracotta) !important; }
+.button.secondary:not(.is-outline) { background-color: var(--dtw-mustard) !important; color: var(--dtw-forest) !important; border-radius: 999px !important; }

@@ -1,0 +1,13 @@
+{
+  "name": "detuinierwinkel/theme-migrator",
+  "description": "Strangler Fig theme routing voor block-theme pilot.",
+  "type": "wordpress-muplugin",
+  "require": {
+    "php": ">=8.1",
+    "alleyinteractive/wp-theme-migrator": "^1.0"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist"
+  }
+}
