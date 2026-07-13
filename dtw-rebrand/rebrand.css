@@ -150,3 +150,128 @@ footer.footer-wrapper, .footer-wrapper { background-color: var(--dtw-forest) !im
 }
 .button.primary:not(.is-outline):hover { background-color: var(--dtw-terracotta) !important; }
 .button.secondary:not(.is-outline) { background-color: var(--dtw-mustard) !important; color: var(--dtw-forest) !important; border-radius: 999px !important; }
+
+/* ============================================================
+   v1 — PREMIUM POLISH (beweging, diepte, micro-interacties)
+   Onderzoeksbasis: condense-on-scroll (Nike), backdrop-blur
+   (Comeau), nav-underline hover, zachte transities.
+   Alles respecteert prefers-reduced-motion.
+   ============================================================ */
+
+/* -- zachte transities op de dragende header-elementen -- */
+@media (prefers-reduced-motion: no-preference) {
+  #header .header-main,
+  #header #top-bar,
+  #header .header-bottom,
+  .header-main .header-logo img,
+  .header-main .nav > li > a,
+  .header-bottom .nav > li > a,
+  .header-main .icon-search, .header-main .icon-user,
+  .header-main .icon-heart, .header-main [class*="icon-"],
+  .button, .nav-dropdown {
+    transition: transform .32s cubic-bezier(.4,0,.2,1),
+                background-color .32s cubic-bezier(.4,0,.2,1),
+                box-shadow .32s cubic-bezier(.4,0,.2,1),
+                color .2s ease, opacity .28s ease, max-height .34s ease,
+                padding .32s cubic-bezier(.4,0,.2,1);
+  }
+}
+
+/* -- 1. CONDENSE ON SCROLL -- (class op <html> via rebrand.js) */
+/* topbar vouwt weg zodra je scrollt -> compacte balk */
+html.dtw-condensed #top-bar {
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+}
+#top-bar { max-height: 120px; overflow: hidden; }
+/* hoofdbalk krimpt subtiel + logo iets kleiner */
+html.dtw-condensed .header-main { padding-top: 4px !important; padding-bottom: 4px !important; }
+html.dtw-condensed .header-main .header-logo img,
+html.dtw-condensed .header-main .header_logo {
+  transform: scale(.86);
+  transform-origin: left center;
+}
+
+/* -- 2. FROSTED DEPTH -- zodra gescrold: translucent forest + blur + schaduw */
+html.dtw-condensed .header-main {
+  background-color: rgba(31,61,43,0.90) !important;
+  -webkit-backdrop-filter: saturate(1.2) blur(12px);
+  backdrop-filter: saturate(1.2) blur(12px);
+  box-shadow: 0 6px 28px rgba(24,48,31,0.22);
+}
+html.dtw-condensed .header-bottom {
+  background-color: rgba(244,239,226,0.86) !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 18px rgba(31,61,43,0.08);
+}
+
+/* -- 3. NAV UNDERLINE -- lijn schuift van het midden open bij hover */
+.header-bottom .nav > li > a { position: relative; }
+.header-bottom .nav > li > a::after {
+  content: "";
+  position: absolute;
+  left: 50%; right: 50%; bottom: 4px;
+  height: 2px;
+  background: var(--dtw-terracotta);
+  border-radius: 2px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .header-bottom .nav > li > a::after { transition: left .28s cubic-bezier(.4,0,.2,1), right .28s cubic-bezier(.4,0,.2,1); }
+}
+.header-bottom .nav > li > a:hover::after,
+.header-bottom .nav > li.current-menu-item > a::after,
+.header-bottom .nav > li.active > a::after { left: 12px; right: 12px; }
+
+/* dezelfde onderstreping in de forest-hoofdbalk (mustard i.p.v. terracotta) */
+.header-main .nav > li > a { position: relative; }
+.header-main .nav > li > a::after {
+  content: ""; position: absolute; left: 50%; right: 50%; bottom: 2px;
+  height: 2px; background: var(--dtw-mustard); border-radius: 2px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .header-main .nav > li > a::after { transition: left .28s cubic-bezier(.4,0,.2,1), right .28s cubic-bezier(.4,0,.2,1); }
+}
+.header-main .nav > li > a:hover::after { left: 0; right: 0; }
+
+/* -- 4. ICON MICRO-INTERACTIES -- optillen + accentkleur bij hover */
+.header-main a:hover [class*="icon-"],
+.header-main [class*="icon-"]:hover { transform: translateY(-2px) scale(1.08); color: var(--dtw-mustard) !important; }
+
+/* cart-badge subtiele pop bij hover over het mandje */
+.header-main .cart-item:hover .cart-icon strong,
+.header-main .cart-item:hover .badge { transform: scale(1.12); }
+
+/* -- 5. DROPDOWNS -- zachte fade+lift i.p.v. hard verschijnen */
+@media (prefers-reduced-motion: no-preference) {
+  .nav-dropdown { opacity: 0; transform: translateY(8px); }
+  li:hover > .nav-dropdown,
+  .nav-dropdown.show,
+  li.current-dropdown > .nav-dropdown { opacity: 1; transform: translateY(0); }
+}
+
+/* -- 6. KNOPPEN -- lichte lift + schaduw bij hover (premium tactiel) */
+@media (prefers-reduced-motion: no-preference) {
+  .button.primary:not(.is-outline):hover,
+  .button.secondary:not(.is-outline):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(31,61,43,0.18);
+  }
+}
+
+/* -- 7. zoekveld focus-glow in de hoofdbalk -- */
+.header-main .search-field:focus {
+  box-shadow: 0 0 0 3px rgba(217,164,65,0.35);
+  outline: none;
+}
+
+/* -- reduced motion: alles instant, geen transform-resten -- */
+@media (prefers-reduced-motion: reduce) {
+  html.dtw-condensed .header-main .header-logo img,
+  html.dtw-condensed .header-main .header_logo { transform: none; }
+  .header-bottom .nav > li > a::after,
+  .header-main .nav > li > a::after { transition: none; }
+}
