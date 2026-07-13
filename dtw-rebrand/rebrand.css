@@ -275,3 +275,52 @@ html.dtw-condensed .header-bottom {
   .header-bottom .nav > li > a::after,
   .header-main .nav > li > a::after { transition: none; }
 }
+
+/* ============================================================
+   v1.1 — Flatsome nav-pill/box killen; underline is de enige
+   actief-indicator. De afgeronde achtergrond achter een actief/
+   open menu-item botst met het design.
+   ============================================================ */
+.header-main ul.nav > li > a,
+.header-main ul.nav.nav-pills > li > a,
+.header-main ul.nav.nav-box > li > a,
+.header-main ul.nav > li.active > a,
+.header-main ul.nav > li.current-menu-item > a,
+.header-main ul.nav > li.current-dropdown > a,
+.header-main ul.nav > li:hover > a,
+.header-main ul.nav > li.current-dropdown:hover > a {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+/* actief/open item -> mustard underline volledig open (i.p.v. de pill) */
+.header-main .nav > li.active > a::after,
+.header-main .nav > li.current-menu-item > a::after,
+.header-main .nav > li.current-dropdown > a::after { left: 0 !important; right: 0 !important; }
+/* actieve tekst blijft cream, wordt mustard bij hover (geen kleurvlak) */
+.header-main .nav > li.active > a,
+.header-main .nav > li.current-dropdown > a { color: var(--dtw-cream) !important; }
+.header-main .nav > li.active > a:hover,
+.header-main .nav > li.current-dropdown > a:hover { color: var(--dtw-mustard) !important; }
+
+/* dropdown iets meer diepte + zachtere rand, caret meelopen in paper */
+.header-main .nav-dropdown,
+.header-bottom .nav-dropdown {
+  box-shadow: 0 18px 44px rgba(24,48,31,0.18) !important;
+  border: 1px solid rgba(31,61,43,0.08) !important;
+  padding: 6px 4px !important;
+}
+.header-main .nav-dropdown a,
+.header-bottom .nav-dropdown a {
+  border-radius: 8px;
+  padding: 10px 16px !important;
+}
+.header-main .nav-dropdown a:hover,
+.header-bottom .nav-dropdown a:hover {
+  background: rgba(141,174,126,0.16) !important;
+  color: var(--dtw-forest) !important;
+}
+/* caret (pijltje) van de dropdown in paper i.p.v. wit */
+.header-main .nav-dropdown:before,
+.header-bottom .nav-dropdown:before { border-bottom-color: var(--dtw-paper) !important; }
