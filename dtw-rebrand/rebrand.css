@@ -76,7 +76,7 @@ h1, h2, h3, .section-title span { font-family: var(--dtw-font-serif) !important;
   max-height: none !important;
   padding: 0 !important;
 }
-.header-main #logo { width: 172px !important; }
+.header-main #logo { width: 208px !important; }
 .header-main #logo a { display: flex; align-items: center; }
 @media (max-width: 849px) {
   .header-main #logo { width: 148px !important; }
@@ -493,12 +493,13 @@ body:has(.twb-stickybar) #footer .absolute-footer { padding-bottom: 104px !impor
 @media (min-width: 850px) and (max-width: 1480px) {
   /* "Winkelwagen / € 0,00" kost 150px; het icoon met teller blijft staan */
   .header-main .cart-item .header-cart-title { display: none !important; }
-  .header-main #logo { width: 150px !important; margin-right: 18px !important; }
+  .header-main #logo { width: 186px !important; margin-right: 18px !important; }
   .header-main .header-nav-main > li { margin: 0 2px !important; }
   .header-main .header-nav-main > li > a { padding-left: 7px !important; padding-right: 7px !important; }
 }
 @media (min-width: 850px) and (max-width: 1250px) {
   .header-main .account-item .header-account-title { display: none !important; }
+  .header-main #logo { width: 150px !important; }
 }
 @media (min-width: 850px) and (max-width: 1100px) {
   .header-main #logo { width: 136px !important; margin-right: 10px !important; }
