@@ -3,7 +3,7 @@
  * Plugin Name: DTW Landing-doorverwijzing (mu, alleen staging)
  * Description: Stuurt de oude productpagina van modellen met een nieuwe landing door naar die landing, en haalt de landings uit de zoekresultaten zodat elk model één keer verschijnt. Werkt alleen op een host die met "staging." begint. Oude pagina bekijken: voeg ?oud=1 toe aan het productadres.
  * Author: Daan (web-dev-agent)
- * Version: 0.1.0
+ * Version: 0.2.0
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. Er wordt niets in de database gewijzigd.
  */
@@ -39,6 +39,26 @@ function dtw_lr_map() {
         6484 => 'tuinkas-uranus-6700',
         6504 => 'tuinkas-uranus-9900',
         6524 => 'tuinkas-uranus-11500',
+        // toegevoegd 2026-11-20: Apollo, Planet, Comet, Venus, Orion en Jupiter 11500
+        6202 => 'tuinkas-apollo-2500',
+        6216 => 'tuinkas-apollo-3800',
+        6230 => 'tuinkas-apollo-5000',
+        6244 => 'tuinkas-apollo-6200',
+        6073 => 'tuinkas-planet-2500',
+        5982 => 'tuinkas-planet-3800',
+        6087 => 'tuinkas-planet-5000',
+        6101 => 'tuinkas-planet-6200',
+        5911 => 'tuinkas-comet-2500',
+        5919 => 'tuinkas-comet-3800',
+        6013 => 'tuinkas-comet-5000',
+        6065 => 'tuinkas-comet-6200',
+        6115 => 'tuinkas-venus-2500',
+        6138 => 'tuinkas-venus-3800',
+        6158 => 'tuinkas-venus-5000',
+        6180 => 'tuinkas-venus-6200',
+        3791 => 'tuinkas-orion-3800',
+        3777 => 'tuinkas-orion-5000',
+        6380 => 'tuinkas-jupiter-11500',
     );
 }
 
