@@ -324,3 +324,180 @@ html.dtw-condensed .header-bottom {
 /* caret (pijltje) van de dropdown in paper i.p.v. wit */
 .header-main .nav-dropdown:before,
 .header-bottom .nav-dropdown:before { border-bottom-color: var(--dtw-paper) !important; }
+
+/* ============================================================
+   v1.2 — VOETTEKST (opdracht MM 2026-11-20)
+   De voettekst is een UX Builder-blok (.row.footerx) en geen
+   .footer-widgets; de v0-regels raakten hem daardoor niet.
+   Alles hieronder is bewust onder #footer gescoped.
+   ============================================================ */
+
+/* 1 + 6 — leesbare tekst in cream, Manrope als basis */
+#footer,
+#footer .row,
+#footer .col,
+#footer .col-inner,
+#footer p,
+#footer li,
+#footer td,
+#footer th,
+#footer span,
+#footer a,
+#footer .ux-menu-link__text,
+#footer .ct-div-block {
+  color: rgba(244, 239, 226, 0.88) !important;
+  font-family: var(--dtw-font-sans) !important;
+}
+#footer p,
+#footer td,
+#footer .ux-menu-link__text { font-size: 14.5px; line-height: 1.55; }
+#footer a { text-decoration: none; transition: color 0.18s ease; }
+#footer a:hover,
+#footer a:hover .ux-menu-link__text { color: var(--dtw-mustard) !important; }
+#footer a:focus-visible { outline: 2px solid var(--dtw-mustard); outline-offset: 3px; border-radius: 3px; }
+
+/* 6 — kolomkoppen in Fraunces, paper */
+#footer .ux-menu-title,
+#footer h3,
+#footer h4,
+#footer h5,
+#footer .ct-headline {
+  color: var(--dtw-paper) !important;
+  font-family: var(--dtw-font-serif) !important;
+  font-size: 19px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+  line-height: 1.25;
+  margin: 0 0 10px;
+}
+#footer .ux-menu-title { padding: 0 0 6px; min-height: 0; text-transform: capitalize !important; }
+#footer .ux-menu-link + .ux-menu-title { margin-top: 26px; }
+
+/* 2 — accenten uit het palet (was felgroen rgb(10,167,5)) */
+#footer h5 { color: var(--dtw-mustard) !important; font-size: 17px !important; margin-top: 18px; }
+#footer .mabel-bhi-businesshours tr.mbhi-is-current td {
+  color: var(--dtw-mustard) !important;
+  font-weight: 600;
+}
+#footer > .text-center > .is-divider,
+#footer .is-divider {
+  background-color: var(--dtw-mustard) !important;
+  height: 2px !important;
+  opacity: 0.85;
+  margin: 0 !important; /* de marge van 16px liet de witte pagina-achtergrond doorschijnen */
+}
+
+/* lijnen tussen kolommen en menuregels: cream i.p.v. zwart/grijs */
+#footer .row-dashed .col:before,
+#footer .row-dashed .col:after,
+#footer .row-dashed .col-inner:before,
+#footer .row-dashed .col-inner:after { border-color: rgba(244, 239, 226, 0.14) !important; }
+#footer .ux-menu-link,
+#footer .ux-menu-link__link,
+#footer .ux-menu--divider-solid .ux-menu-link:not(:last-of-type) {
+  border-color: rgba(244, 239, 226, 0.12) !important;
+}
+#footer .ux-menu-link__link { padding-top: 7px; padding-bottom: 7px; min-height: 0; }
+
+/* openingstijden-tabel */
+#footer .mabel-bhi-businesshours { width: 100%; max-width: 260px; margin: 0; border: 0; }
+#footer .mabel-bhi-businesshours td {
+  padding: 6px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(244, 239, 226, 0.12) !important;
+  text-align: left;
+  text-transform: capitalize;
+}
+#footer .mabel-bhi-businesshours td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+#footer .mabel-bhi-businesshours tr:last-child td { border-bottom: 0 !important; }
+
+/* 3 — zelfde marge als de pagina-inhoud; kolommen niet tegen de rand */
+#footer .row.footerx {
+  max-width: 1280px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 52px 24px 28px !important;
+}
+#footer .row.footerx > .col { padding: 0 22px 26px !important; }
+#footer .row.footerx > .col > .col-inner { text-align: left !important; }
+#footer .row.footerx .gap-element { display: none !important; }
+
+/* sociale knoppen: omlijnd, binnen het palet */
+#footer .social-icons { margin-top: 16px; text-align: left; }
+#footer .social-icons .button.icon {
+  background-color: transparent !important;
+  border: 1px solid rgba(244, 239, 226, 0.4) !important;
+  color: var(--dtw-cream) !important;
+  box-shadow: none !important;
+  margin-right: 8px;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+#footer .social-icons .button.icon i { color: var(--dtw-cream) !important; }
+#footer .social-icons .button.icon:hover {
+  background-color: var(--dtw-mustard) !important;
+  border-color: var(--dtw-mustard) !important;
+}
+#footer .social-icons .button.icon:hover i { color: var(--dtw-forest) !important; }
+
+/* onderste strook */
+#footer .absolute-footer,
+#footer .absolute-footer * { font-family: var(--dtw-font-sans) !important; }
+#footer .absolute-footer,
+#footer .absolute-footer span,
+#footer .absolute-footer a,
+#footer .absolute-footer .copyright-footer { color: rgba(244, 239, 226, 0.62) !important; }
+#footer .absolute-footer { padding: 18px 0 20px !important; font-size: 13px; }
+
+/* 4 — geen witte strook tussen het laatste landing-blok en de voettekst */
+#main:has(.twb-landing) { background-color: var(--dtw-forest); }
+#main:has(.twb-landing) .page-wrapper { padding-bottom: 0 !important; }
+#main:has(.twb-landing) .row-main > .col { padding-bottom: 0 !important; }
+
+/* 5 — ruimte voor de vaste bestelbalk, zodat de betaallogo's zichtbaar blijven */
+body:has(.twb-stickybar) #footer .absolute-footer { padding-bottom: 104px !important; }
+
+/* mobiel: twee kolommen worden luchtiger, alles links uitgelijnd */
+@media (max-width: 849px) {
+  #footer .row.footerx { padding: 36px 14px 12px !important; }
+  #footer .row.footerx > .col { padding: 0 12px 28px !important; }
+  #footer .mabel-bhi-businesshours { max-width: none; }
+  body:has(.twb-stickybar) #footer .absolute-footer { padding-bottom: 120px !important; }
+}
+
+/* ============================================================
+   v1.2 — KOP: menu op één regel (opdracht MM 2026-11-20)
+   Het hoofdmenu had ±720px nodig en brak onder ±1390px breedte
+   over twee regels. Onder 850px neemt het mobiele menu het over.
+   ============================================================ */
+@media (min-width: 850px) {
+  .header-main .header-nav-main { flex-wrap: nowrap !important; }
+  .header-main .header-nav-main > li { flex: 0 0 auto; }
+  .header-main .header-nav-main > li > a { white-space: nowrap; flex-wrap: nowrap; }
+  .header-main .flex-right > .header-nav { flex-wrap: nowrap !important; }
+}
+@media (min-width: 850px) and (max-width: 1480px) {
+  /* "Winkelwagen / € 0,00" kost 150px; het icoon met teller blijft staan */
+  .header-main .cart-item .header-cart-title { display: none !important; }
+  .header-main #logo { width: 150px !important; margin-right: 18px !important; }
+  .header-main .header-nav-main > li { margin: 0 2px !important; }
+  .header-main .header-nav-main > li > a { padding-left: 7px !important; padding-right: 7px !important; }
+}
+@media (min-width: 850px) and (max-width: 1250px) {
+  .header-main .account-item .header-account-title { display: none !important; }
+}
+@media (min-width: 850px) and (max-width: 1100px) {
+  .header-main #logo { width: 128px !important; margin-right: 10px !important; }
+  .header-main .header-nav-main > li { margin: 0 !important; }
+  .header-main .header-nav-main > li > a {
+    font-size: 11px !important;
+    letter-spacing: 0 !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+}
+@media (min-width: 850px) and (max-width: 940px) {
+  .header-main #logo { width: 104px !important; margin-right: 6px !important; }
+  .header-main .header-nav-main > li > a { font-size: 10.5px !important; padding-left: 3px !important; padding-right: 3px !important; }
+  .header-main .header-wishlist-icon { display: none !important; }
+}
