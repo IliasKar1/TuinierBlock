@@ -3,7 +3,7 @@
  * Plugin Name: DTW Rebrand (mu)
  * Description: Header/footer-rebrand van deTuinierwinkel — laadt tokens, CSS en JS over Flatsome heen. Beheerd via Git (branch mu-plugins), niet handmatig bewerken.
  * Author: Daan (web-dev-agent)
- * Version: 0.1.0
+ * Version: 0.3.0
  */
 
 defined('ABSPATH') || exit;
@@ -31,3 +31,28 @@ add_action('wp_enqueue_scripts', function () {
         wp_enqueue_script('dtw-rebrand', DTW_REBRAND_URL . '/rebrand.js', [], (string) filemtime($js), true);
     }
 }, 99);
+
+/**
+ * Tabblad- en app-iconen van het nieuwe logo (v1.3).
+ * Vervangt op de voorkant het site-icoon uit de Customizer; beheer en
+ * inlogscherm blijven ongemoeid. Weghalen = map dtw-rebrand/logo verwijderen.
+ */
+add_action('init', function () {
+    if (file_exists(DTW_REBRAND_DIR . '/logo/favicon.svg')) {
+        remove_action('wp_head', 'wp_site_icon', 99);
+    }
+});
+
+add_action('wp_head', function () {
+    $dir = DTW_REBRAND_DIR . '/logo';
+    if (!file_exists($dir . '/favicon.svg')) {
+        return;
+    }
+    $url = esc_url(DTW_REBRAND_URL . '/logo');
+    $v   = (string) filemtime($dir . '/favicon.svg');
+    echo '<link rel="icon" type="image/svg+xml" href="' . $url . '/favicon.svg?v=' . $v . '">' . PHP_EOL;
+    echo '<link rel="icon" type="image/png" sizes="32x32" href="' . $url . '/favicon-32.png?v=' . $v . '">' . PHP_EOL;
+    echo '<link rel="icon" type="image/png" sizes="16x16" href="' . $url . '/favicon-16.png?v=' . $v . '">' . PHP_EOL;
+    echo '<link rel="icon" type="image/png" sizes="192x192" href="' . $url . '/icon-192.png?v=' . $v . '">' . PHP_EOL;
+    echo '<link rel="apple-touch-icon" sizes="180x180" href="' . $url . '/apple-touch-icon-180.png?v=' . $v . '">' . PHP_EOL;
+}, 2);
