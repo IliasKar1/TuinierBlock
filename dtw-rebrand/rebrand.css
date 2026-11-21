@@ -628,3 +628,11 @@ body { font-family: var(--dtw-font-sans) !important; color: var(--dtw-ink); }
 /* v1.4 — koppen die in kleine letters zijn ingevoerd ("over ons", "contact") beginnen met een hoofdletter */
 #main .section-title-main { display: inline-block; }
 #main :is(h1, h2, h3, h4, h5, h6, .section-title-main):not(:is(.twb-landing, .twh) *)::first-letter { text-transform: uppercase; }
+
+/* v1.4 — keuzeknoppen op de productpagina's zonder landing (was felgroen) */
+#main .variable-items-wrapper .variable-item.button-variable-item { border-color: transparent !important; box-shadow: 0 0 0 1px rgba(31, 61, 43, 0.3) !important; border-radius: 8px !important; }
+#main .variable-items-wrapper .variable-item.button-variable-item:hover { box-shadow: 0 0 0 2px var(--dtw-forest) !important; }
+#main .variable-items-wrapper .variable-item.button-variable-item.selected { background-color: var(--dtw-forest) !important; box-shadow: 0 0 0 2px var(--dtw-forest) !important; }
+#main .variable-items-wrapper .variable-item.button-variable-item.selected, #main .variable-items-wrapper .variable-item.button-variable-item.selected .variable-item-contents,
+#main .variable-items-wrapper .variable-item.button-variable-item.selected .variable-item-span { color: var(--dtw-cream) !important; }
+#main .variations_form .ux-swatch.selected { box-shadow: 0 0 0 2px var(--dtw-forest) !important; }
