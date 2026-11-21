@@ -3,7 +3,7 @@
  * Plugin Name: DTW Categoriepagina's (mu, alleen staging)
  * Description: Toont op een productcategorie en op de winkelpagina de inhoud van de pagina "cat-inhoud-<slug>" (gemaakt door WebDev/home/build_categorie.py) in plaats van het productraster van het thema. Adres, titel en zoekmachine-instellingen van de categorie blijven gelijk. Oude weergave bekijken: voeg ?oud=1 toe aan het adres. Werkt alleen op een host die met "staging." begint.
  * Author: Daan (web-dev-agent)
- * Version: 0.2.0
+ * Version: 0.3.0
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. Er wordt niets in de database gewijzigd.
  */
@@ -13,7 +13,11 @@ defined('ABSPATH') || exit;
 /** Alleen actief op de testsite. */
 function dtw_cat_is_staging() {
     $host = (string) wp_parse_url(home_url(), PHP_URL_HOST);
-    return strpos($host, 'staging.') === 0;
+    if (strpos($host, 'staging.') === 0) {
+        return true;
+    }
+    // Productie (livegang 2026-11-21): aan zodra het bestand dtw-live.flag in mu-plugins staat. Uit: dat bestand verwijderen.
+    return file_exists(WPMU_PLUGIN_DIR . '/dtw-live.flag');
 }
 
 /** De inhoudspagina die bij de bekeken categorie hoort, of null. */

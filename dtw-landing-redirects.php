@@ -3,7 +3,7 @@
  * Plugin Name: DTW Landing-doorverwijzing (mu, alleen staging)
  * Description: Stuurt de oude productpagina van modellen met een nieuwe landing door naar die landing, en haalt de landings uit de zoekresultaten zodat elk model één keer verschijnt. Werkt alleen op een host die met "staging." begint. Oude pagina bekijken: voeg ?oud=1 toe aan het productadres.
  * Author: Daan (web-dev-agent)
- * Version: 0.3.0
+ * Version: 0.4.0
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. Er wordt niets in de database gewijzigd.
  */
@@ -13,7 +13,24 @@ defined('ABSPATH') || exit;
 /** Alleen actief op de testsite. */
 function dtw_lr_is_staging() {
     $host = (string) wp_parse_url(home_url(), PHP_URL_HOST);
-    return strpos($host, 'staging.') === 0;
+    if (strpos($host, 'staging.') === 0) {
+        return true;
+    }
+    // Productie (livegang 2026-11-21): aan zodra het bestand dtw-live.flag in mu-plugins staat. Uit: dat bestand verwijderen.
+    return file_exists(WPMU_PLUGIN_DIR . '/dtw-live.flag');
+}
+
+/** Staging: tijdelijk (302). Productie: 302 tot in dtw-live.flag "301" staat; dan blijvend. */
+function dtw_lr_status() {
+    $host = (string) wp_parse_url(home_url(), PHP_URL_HOST);
+    if (strpos($host, 'staging.') === 0) {
+        return 302;
+    }
+    $flag = WPMU_PLUGIN_DIR . '/dtw-live.flag';
+    if (file_exists($flag) && trim((string) file_get_contents($flag)) === '301') {
+        return 301;
+    }
+    return 302;
 }
 
 /** Product-ID => slug van de nieuwe landing. */
@@ -132,7 +149,7 @@ add_action('template_redirect', function () {
     if ($args) {
         $url = add_query_arg($args, $url);
     }
-    wp_safe_redirect($url, 302);
+    wp_safe_redirect($url, dtw_lr_status());
     exit;
 }, 1);
 
