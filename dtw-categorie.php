@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: DTW Categoriepagina's (mu, alleen staging)
- * Description: Toont op een productcategorie de inhoud van de pagina "cat-inhoud-<slug>" (gemaakt door WebDev/home/build_categorie.py) in plaats van het productraster van het thema. Adres, titel en zoekmachine-instellingen van de categorie blijven gelijk. Oude weergave bekijken: voeg ?oud=1 toe aan het adres. Werkt alleen op een host die met "staging." begint.
+ * Description: Toont op een productcategorie en op de winkelpagina de inhoud van de pagina "cat-inhoud-<slug>" (gemaakt door WebDev/home/build_categorie.py) in plaats van het productraster van het thema. Adres, titel en zoekmachine-instellingen van de categorie blijven gelijk. Oude weergave bekijken: voeg ?oud=1 toe aan het adres. Werkt alleen op een host die met "staging." begint.
  * Author: Daan (web-dev-agent)
- * Version: 0.1.0
+ * Version: 0.2.0
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. Er wordt niets in de database gewijzigd.
  */
@@ -18,14 +18,22 @@ function dtw_cat_is_staging() {
 
 /** De inhoudspagina die bij de bekeken categorie hoort, of null. */
 function dtw_cat_content_page() {
-    if (!function_exists('is_product_category') || !is_product_category()) {
+    if (!function_exists('is_shop') || !function_exists('is_product_category')) {
         return null;
     }
-    $term = get_queried_object();
-    if (!is_object($term) || empty($term->slug)) {
+    if (is_shop() && !is_search()) {
+        // de winkelpagina ("Ons aanbod")
+        $slug = 'winkel';
+    } elseif (is_product_category()) {
+        $term = get_queried_object();
+        if (!is_object($term) || empty($term->slug)) {
+            return null;
+        }
+        $slug = $term->slug;
+    } else {
         return null;
     }
-    $page = get_page_by_path('cat-inhoud-' . $term->slug);
+    $page = get_page_by_path('cat-inhoud-' . $slug);
     if (!$page || !in_array($page->post_status, array('publish', 'private'), true)) {
         return null;
     }
@@ -46,8 +54,8 @@ add_action('template_redirect', function () {
 
     // Alle modellen staan op één pagina: /page/2/ en verder gaan naar de eerste pagina.
     if ((int) get_query_var('paged') > 1) {
-        $link = get_term_link(get_queried_object());
-        if (!is_wp_error($link)) {
+        $link = is_shop() ? wc_get_page_permalink('shop') : get_term_link(get_queried_object());
+        if (is_string($link) && $link !== '') {
             wp_safe_redirect($link, 302);
             exit;
         }
