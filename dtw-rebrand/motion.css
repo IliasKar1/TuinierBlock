@@ -20,7 +20,7 @@
   ::view-transition-group(dtw-kop) { z-index: 20; animation-duration: 320ms; animation-timing-function: cubic-bezier(0.22, 0.8, 0.2, 1); }
 
   /* de inhoud: oude en nieuwe pagina vloeien tegelijk in elkaar over, zonder leeg moment ertussen (v1.1) */
-  ::view-transition-group(root) { animation-duration: 320ms; animation-timing-function: ease; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 320ms; animation-timing-function: ease; }
 
   /* 2 — de foto van de aangeklikte kaart wordt de hoofdfoto van de landing.
      motion.js geeft de aangeklikte kaartfoto dezelfde naam. */
