@@ -27,7 +27,27 @@
     if (!img) return;
     wisNamen();                       // een naam mag maar één keer op de pagina voorkomen
     img.style.viewTransitionName = NAAM;
+    a.classList.add('dtw-gekozen');   // direct zichtbaar dat de klik is aangekomen
   }, true);
+
+  // terug via "vorige" uit de cache van de browser: de markering van de kaart weghalen
+  window.addEventListener('pageshow', function () {
+    var gekozen = document.querySelectorAll('a.twh-card.dtw-gekozen');
+    for (var i = 0; i !== gekozen.length; i++) gekozen[i].classList.remove('dtw-gekozen');
+  });
+
+  // De volgende pagina alvast ophalen zodra de muis even op een kaart of menulink staat (alleen het document,
+  // er wordt niets uitgevoerd: de meting telt dus geen bezoek). Zo begint de overgang direct na de klik.
+  function voorladen() {
+    if (!window.HTMLScriptElement || !HTMLScriptElement.supports || !HTMLScriptElement.supports('speculationrules')) return;
+    var regels = { prefetch: [{ source: 'document', eagerness: 'moderate',
+      where: { selector_matches: 'a.twh-card, a.twh-tile-wide, a.twc-cat, a.twh-meer, .twh-hero-btns a[href^="/"], .twc-tabel a, .header-nav-main a' } }] };
+    var s = document.createElement('script');
+    s.type = 'speculationrules';
+    s.textContent = JSON.stringify(regels);
+    document.head.appendChild(s);
+  }
+  voorladen();
 
   // terug van een landing naar de lijst: de kaart van dat model krijgt de naam, als hij in beeld staat
   window.addEventListener('pagereveal', function (ev) {
@@ -43,6 +63,7 @@
     wisNamen();
     var kaarten = document.querySelectorAll('a.twh-card[href="' + van + '"]');
     for (var i = 0; i !== kaarten.length; i++) {
+      kaarten[i].classList.remove('dtw-gekozen');
       var img = kaarten[i].querySelector('img');
       if (!img || !img.offsetParent) continue;
       var r = img.getBoundingClientRect();

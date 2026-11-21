@@ -1,5 +1,5 @@
 /* ============================================================
-   DTW beweging v1 (proef, 2026-11-21, akkoord eigenaar)
+   DTW beweging v1.1 (proef, 2026-11-21, akkoord eigenaar)
    1. Paginaovergangen via de View Transitions van de browser (geen library).
    2. Productkaart -> landing: de foto groeit door tot de hoofdfoto.
    3. Binnenkomst van het hoofdbeeld op de homepage.
@@ -14,19 +14,22 @@
   /* 1 — overgang tussen pagina's van dezelfde site; oude en nieuwe pagina doen allebei mee */
   @view-transition { navigation: auto; }
 
-  /* de kop blijft staan; alleen de inhoud eronder wisselt */
+  /* de kop blijft staan; alleen de inhoud eronder wisselt. De kop is na scrollen smaller dan bovenaan een pagina:
+     dat verschil loopt nu vloeiend mee in plaats van te verspringen (v1.1). */
   #header .header-wrapper { view-transition-name: dtw-kop; }
-  ::view-transition-group(dtw-kop) { z-index: 20; animation-duration: 0s; }
-  ::view-transition-old(dtw-kop) { display: none; }
-  ::view-transition-new(dtw-kop) { animation: none; }
+  ::view-transition-group(dtw-kop) { z-index: 20; animation-duration: 320ms; animation-timing-function: cubic-bezier(0.22, 0.8, 0.2, 1); }
 
-  ::view-transition-old(root) { animation: 170ms cubic-bezier(0.4, 0, 1, 1) both dtw-vt-uit; }
-  ::view-transition-new(root) { animation: 360ms cubic-bezier(0.16, 0.8, 0.24, 1) 70ms both dtw-vt-in; }
+  /* de inhoud: oude en nieuwe pagina vloeien tegelijk in elkaar over, zonder leeg moment ertussen (v1.1) */
+  ::view-transition-group(root) { animation-duration: 320ms; animation-timing-function: ease; }
 
   /* 2 — de foto van de aangeklikte kaart wordt de hoofdfoto van de landing.
      motion.js geeft de aangeklikte kaartfoto dezelfde naam. */
-  #twb-main-img { view-transition-name: kas-hero; }
-  ::view-transition-group(kas-hero) { z-index: 10; animation-duration: 480ms; animation-timing-function: cubic-bezier(0.22, 0.8, 0.2, 1); }
+  /* v1.1: het hele fotovak doet mee, niet alleen de foto. Het vak heeft de kleine, al geladen versie als achtergrond,
+     zodat er geen leeg vak verschijnt terwijl de scherpe foto nog laadt. */
+  .twb-gallery-main { view-transition-name: kas-hero; }
+  ::view-transition-group(kas-hero) { z-index: 10; animation-duration: 440ms; animation-timing-function: cubic-bezier(0.22, 0.8, 0.2, 1); }
+  /* de aangeklikte kaart laat meteen zien dat er iets gebeurt, ook als de volgende pagina even op zich laat wachten */
+  a.twh-card.dtw-gekozen { box-shadow: 0 0 0 2px #C0633D, 0 10px 24px rgba(31, 61, 43, 0.14) !important; transform: translateY(-3px); }
   ::view-transition-old(kas-hero), ::view-transition-new(kas-hero) { width: 100%; height: 100%; object-fit: cover; overflow: clip; }
 
   /* 3 — hoofdbeeld van de homepage: tekst komt omhoog, foto zoomt rustig uit.
@@ -45,7 +48,5 @@
   .twc-intro-img img { animation: dtw-uitzoomen 1400ms cubic-bezier(0.16, 0.8, 0.24, 1) backwards; }
 }
 
-@keyframes dtw-vt-uit { to { opacity: 0; transform: translateY(-10px); } }
-@keyframes dtw-vt-in { from { opacity: 0; transform: translateY(16px); } }
 @keyframes dtw-omhoog { from { opacity: 0; transform: translateY(26px); } }
 @keyframes dtw-uitzoomen { from { transform: scale(1.07); } }
