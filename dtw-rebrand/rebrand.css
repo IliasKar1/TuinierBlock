@@ -624,3 +624,7 @@ body { font-family: var(--dtw-font-sans) !important; color: var(--dtw-ink); }
 #main .nav-tabs > li.active > a, #main .tabs > li.active > a { color: var(--dtw-forest) !important; }
 #main .nav-line-bottom > li.active > a::before, #main .nav-line > li.active > a::before, #main .nav-line-grow > li.active > a::before { background-color: var(--dtw-terracotta) !important; }
 #main .accordion-title.active, #main .accordion-title:hover { color: var(--dtw-forest) !important; border-color: var(--dtw-terracotta) !important; }
+
+/* v1.4 — koppen die in kleine letters zijn ingevoerd ("over ons", "contact") beginnen met een hoofdletter */
+#main .section-title-main { display: inline-block; }
+#main :is(h1, h2, h3, h4, h5, h6, .section-title-main):not(:is(.twb-landing, .twh) *)::first-letter { text-transform: uppercase; }
