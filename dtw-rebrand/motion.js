@@ -56,11 +56,9 @@
   });
 
   /* ---------- B. scroll-animaties ---------- */
-  var home = document.getElementById('twh-home');
-  var cat = document.getElementById('twc-cat');
-  var over = document.getElementById('two-overons');
-  var root = home || cat || over;
-  if (!root) return;
+  // Dit script staat bovenaan de pagina (de browser start een overgang al vóór de inhoud er staat);
+  // de rest wacht daarom tot de inhoud er is.
+  var home, cat, over, root;
 
   function laad(src, klaar) {
     var s = document.createElement('script');
@@ -157,6 +155,15 @@
       laad('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js', start);
     });
   }
-  if (document.readyState === 'complete') laadGsap();
-  else window.addEventListener('load', laadGsap);
+  function zoek() {
+    home = document.getElementById('twh-home');
+    cat = document.getElementById('twc-cat');
+    over = document.getElementById('two-overons');
+    root = home || cat || over;
+    if (!root) return;
+    if (document.readyState === 'complete') laadGsap();
+    else window.addEventListener('load', laadGsap);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', zoek);
+  else zoek();
 })();

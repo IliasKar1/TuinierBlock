@@ -37,7 +37,8 @@ add_action('wp_enqueue_scripts', function () {
     $mjs  = DTW_REBRAND_DIR . '/motion.js';
     if (!isset($_GET['beweging']) && file_exists($mcss) && file_exists($mjs)) {
         wp_enqueue_style('dtw-motion', DTW_REBRAND_URL . '/motion.css', [], (string) filemtime($mcss));
-        wp_enqueue_script('dtw-motion', DTW_REBRAND_URL . '/motion.js', [], (string) filemtime($mjs), true);
+        // bovenaan de pagina: de browser start een paginaovergang al voordat de inhoud er staat
+        wp_enqueue_script('dtw-motion', DTW_REBRAND_URL . '/motion.js', [], (string) filemtime($mjs), false);
     }
 }, 99);
 
