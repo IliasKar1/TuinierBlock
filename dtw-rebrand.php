@@ -30,6 +30,15 @@ add_action('wp_enqueue_scripts', function () {
     if (file_exists($js)) {
         wp_enqueue_script('dtw-rebrand', DTW_REBRAND_URL . '/rebrand.js', [], (string) filemtime($js), true);
     }
+
+    // Beweging (proef 2026-11-21): paginaovergangen en scroll-animaties.
+    // Uit voor één pagina: ?beweging=uit achter het adres. Helemaal uit: motion.css en motion.js verwijderen.
+    $mcss = DTW_REBRAND_DIR . '/motion.css';
+    $mjs  = DTW_REBRAND_DIR . '/motion.js';
+    if (!isset($_GET['beweging']) && file_exists($mcss) && file_exists($mjs)) {
+        wp_enqueue_style('dtw-motion', DTW_REBRAND_URL . '/motion.css', [], (string) filemtime($mcss));
+        wp_enqueue_script('dtw-motion', DTW_REBRAND_URL . '/motion.js', [], (string) filemtime($mjs), true);
+    }
 }, 99);
 
 /**
