@@ -3,7 +3,7 @@
  * Plugin Name: DTW Titel en omschrijving (mu)
  * Description: Geeft pagina's een eigen titel en omschrijving voor zoekmachines via de velden dtw_seo_title en dtw_seo_desc (gevuld door WebDev/landings/publish.py en WebDev/home/build_categorie.py). Op een productcategorie en de winkelpagina gelden de velden van de pagina "cat-inhoud-<slug>". Is een veld leeg, dan blijft de instelling van Yoast gelden. Haalt daarnaast de oude productpagina's die naar een landing doorverwijzen uit de sitemap.
  * Author: Daan (web-dev-agent)
- * Version: 0.1.0
+ * Version: 0.1.1
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. De velden blijven staan maar doen dan niets.
  */
@@ -61,6 +61,22 @@ foreach (array('wpseo_metadesc', 'wpseo_opengraph_desc', 'wpseo_twitter_descript
     }, 99);
 }
 unset($dtw_seo_filter);
+
+/** Ook in de gestructureerde gegevens van Yoast (naam en omschrijving van de pagina). */
+add_filter('wpseo_schema_webpage', function ($data) {
+    if (!is_array($data)) {
+        return $data;
+    }
+    $titel = dtw_seo_veld('dtw_seo_title', '');
+    $tekst = dtw_seo_veld('dtw_seo_desc', '');
+    if ($titel !== '') {
+        $data['name'] = $titel;
+    }
+    if ($tekst !== '') {
+        $data['description'] = $tekst;
+    }
+    return $data;
+}, 99);
 
 /** Oude productpagina's die naar een landing doorverwijzen horen niet in de sitemap. */
 add_filter('wpseo_exclude_from_sitemap_by_post_ids', function ($ids) {
