@@ -516,3 +516,111 @@ body:has(.twb-stickybar) #footer .absolute-footer { padding-bottom: 104px !impor
   .header-main .header-nav-main > li > a { font-size: 10.5px !important; padding-left: 3px !important; padding-right: 3px !important; }
   .header-main .header-wishlist-icon { display: none !important; }
 }
+
+/* ============================================================
+   v1.4 — HUISSTIJL OP ALLE OVERIGE PAGINA'S (eigenaar, 2026-11-21)
+   Over ons, Contact, Blogs, Winkel, FAQ, winkelwagen, afrekenen, account
+   en de productpagina's zonder landing hadden nog wit, Lato en felgroen.
+   Dit is een kleur- en letterlaag; de opbouw van die pagina's blijft.
+   De eigen pagina's (landings .twb-landing, homepage en categorieën .twh)
+   regelen hun stijl zelf en zijn overal uitgesloten.
+   ============================================================ */
+body #wrapper, body #main { background-color: var(--dtw-paper); }
+body { font-family: var(--dtw-font-sans) !important; color: var(--dtw-ink); }
+
+/* koppen: Fraunces, forest (was felgroen rgb(10,167,5)) */
+#main :is(h1, h2, h3, h4, h5, h6, .heading-font, .section-title-main, .product-title, .entry-title, .post-title, .header-title):not(:is(.twb-landing, .twh) *) {
+  font-family: var(--dtw-font-serif) !important;
+  color: var(--dtw-forest) !important;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  text-transform: none !important;
+}
+#main :is(h1, h2, h3, h4, h5, h6):not(:is(.twb-landing, .twh) *) :is(a, strong, b, span) { color: inherit !important; font-weight: inherit; }
+#main :is(.section-title, .section-title-main):not(:is(.twb-landing, .twh) *) { font-size: 34px; }
+#main .section-title b { background-color: var(--dtw-forest); opacity: 0.14; }
+#main .is-divider:not(:is(.twb-landing, .twh) *) { background-color: var(--dtw-terracotta) !important; }
+
+/* tekst en links */
+#main :is(p, li, dd, td):not(:is(.twb-landing, .twh) *) { color: #2B2B2B; }
+#main a:not(.button):not(:is(.twb-landing, .twh) *) { color: var(--dtw-forest); }
+#main a:not(.button):not(:is(.twb-landing, .twh) *):hover { color: var(--dtw-terracotta); }
+#main :is(.entry-content, .page-wrapper, .term-description) :is(p, li) a:not(.button):not(:is(.twb-landing, .twh) *) {
+  text-decoration: underline; text-decoration-color: rgba(192, 99, 61, 0.55); text-underline-offset: 3px;
+}
+
+/* knoppen: forest, rond, geen hoofdletters */
+#main :is(.gform_button, .wpcf7-submit, .single_add_to_cart_button, .checkout-button, .button.alt, .button.success, .button.checkout,
+          .button.wc-forward, .woocommerce-button, #place_order, .woocommerce-form-login__submit, .woocommerce-form-register__submit,
+          .price_slider_amount .button, .button.wc-backward, button[name="update_cart"], button[name="apply_coupon"],
+          button[name="save_account_details"], button[name="save_address"], .wishlist_table .button, input[type="submit"]):not(:is(.twb-landing, .twh) *) {
+  background-color: var(--dtw-forest) !important;
+  border-color: var(--dtw-forest) !important;
+  color: var(--dtw-cream) !important;
+  border-radius: 999px !important;
+  font-family: var(--dtw-font-sans) !important;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+}
+#main :is(.gform_button, .wpcf7-submit, .single_add_to_cart_button, .checkout-button, .button.alt, .button.success, .button.checkout,
+          .button.wc-forward, .woocommerce-button, #place_order, .price_slider_amount .button, button[name="update_cart"],
+          button[name="apply_coupon"], input[type="submit"]):not(:is(.twb-landing, .twh) *):hover {
+  background-color: var(--dtw-terracotta) !important;
+  border-color: var(--dtw-terracotta) !important;
+}
+#main .button.is-outline:not(:is(.twb-landing, .twh) *) { border-color: var(--dtw-forest) !important; color: var(--dtw-forest) !important; border-radius: 999px !important; text-transform: none; }
+#main .button.is-outline:not(:is(.twb-landing, .twh) *):hover { background-color: var(--dtw-forest) !important; color: var(--dtw-cream) !important; }
+
+/* formulieren */
+#main :is(input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="password"], input[type="search"], input[type="number"]:not(.qty), textarea, select):not(:is(.twb-landing, .twh) *) {
+  border: 1.5px solid rgba(31, 61, 43, 0.22) !important;
+  border-radius: 8px !important;
+  background-color: #fff !important;
+  box-shadow: none !important;
+  font-family: var(--dtw-font-sans) !important;
+  color: var(--dtw-ink) !important;
+}
+#main :is(input, textarea, select):not(:is(.twb-landing, .twh) *):focus { border-color: var(--dtw-forest) !important; box-shadow: 0 0 0 3px rgba(141, 174, 126, 0.28) !important; }
+#main :is(label, .gfield_label, .gform-field-label, legend):not(:is(.twb-landing, .twh) *) { color: var(--dtw-forest) !important; font-family: var(--dtw-font-sans) !important; font-weight: 600; }
+#main .gfield_required { color: var(--dtw-terracotta) !important; }
+
+/* blogoverzicht en artikel */
+#main .box-blog-post { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 12px rgba(31, 61, 43, 0.07); }
+#main .box-blog-post .box-text { padding: 18px 22px 24px; }
+#main .box-blog-post .post-title { font-size: 20px; line-height: 1.25; }
+#main .box-blog-post .from_the_blog_excerpt { color: #3F3F3F; }
+#main .badge.post-date .badge-inner { background-color: var(--dtw-forest) !important; border-color: var(--dtw-forest) !important; color: var(--dtw-cream) !important; }
+#main .entry-category a, #main .entry-meta a { color: var(--dtw-terracotta); }
+#main article.post .entry-content { font-size: 16.5px; }
+
+/* winkel: productkaarten, prijzen, labels */
+#main .product-small.box { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 12px rgba(31, 61, 43, 0.07); }
+#main .product-small .box-text { padding: 14px 16px 18px; }
+#main .product-small .product-title, #main .product-small .name { font-size: 17px; line-height: 1.25; }
+#main .product-small .category { color: var(--dtw-forest-2); letter-spacing: 0.1em; opacity: 1; }
+#main :is(.price, .price .amount, .woocommerce-Price-amount):not(:is(.twb-landing, .twh) *) { color: var(--dtw-forest) !important; font-weight: 700; }
+#main del .amount { opacity: 0.5; font-weight: 400; }
+#main .badge-inner.on-sale, #main .badge-container .badge-inner { background-color: var(--dtw-terracotta) !important; border-color: var(--dtw-terracotta) !important; color: #fff !important; }
+#main .star-rating span::before, #main .star-rating::before { color: var(--dtw-mustard) !important; }
+#main .product-category .box-text { background-color: rgba(251, 248, 241, 0.95) !important; }
+#main .product-category .header-title { font-size: 18px; }
+#main .product-category .count { color: var(--dtw-terracotta) !important; opacity: 1; }
+#main .widget-title { font-family: var(--dtw-font-sans) !important; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dtw-forest) !important; }
+#main .woocommerce-breadcrumb, .shop-page-title .woocommerce-breadcrumb { font-size: 13px !important; text-transform: none !important; letter-spacing: 0 !important; color: var(--dtw-forest-2) !important; }
+.shop-page-title .woocommerce-breadcrumb a { color: var(--dtw-forest-2) !important; }
+.shop-page-title.page-title { background-color: var(--dtw-paper); }
+#main .price_slider .ui-slider-range, #main .price_slider .ui-slider-handle { background-color: var(--dtw-forest) !important; }
+#main .page-numbers .page-number.current, #main .page-numbers .page-number:hover { background-color: var(--dtw-forest) !important; border-color: var(--dtw-forest) !important; color: var(--dtw-cream) !important; }
+
+/* winkelwagen, afrekenen, account */
+#main :is(.cart_totals, .checkout-sidebar .col-inner, .woocommerce-MyAccount-content, .cart-sidebar .col-inner).has-border,
+#main .has-border { border-color: rgba(31, 61, 43, 0.2) !important; }
+#main :is(.cart-sidebar, .checkout-sidebar) .col-inner.has-border { background: #fff; border-radius: 12px; }
+#main :is(.shop_table th, .cart_totals th, table th):not(:is(.twb-landing, .twh) *) { color: var(--dtw-forest); letter-spacing: 0.06em; }
+#main .woocommerce-message, #main .message-container.success-color, #main .success-color { color: var(--dtw-forest) !important; }
+#main .woocommerce-info { color: var(--dtw-forest); }
+#main .nav-tabs > li.active > a, #main .tabs > li.active > a { color: var(--dtw-forest) !important; }
+#main .nav-line-bottom > li.active > a::before, #main .nav-line > li.active > a::before, #main .nav-line-grow > li.active > a::before { background-color: var(--dtw-terracotta) !important; }
+#main .accordion-title.active, #main .accordion-title:hover { color: var(--dtw-forest) !important; border-color: var(--dtw-terracotta) !important; }
