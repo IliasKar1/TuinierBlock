@@ -3,7 +3,7 @@
  * Plugin Name: DTW Landing-doorverwijzing (mu, alleen staging)
  * Description: Stuurt de oude productpagina van modellen met een nieuwe landing door naar die landing, en haalt de landings uit de zoekresultaten zodat elk model één keer verschijnt. Werkt alleen op een host die met "staging." begint. Oude pagina bekijken: voeg ?oud=1 toe aan het productadres.
  * Author: Daan (web-dev-agent)
- * Version: 0.4.0
+ * Version: 0.5.0
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. Er wordt niets in de database gewijzigd.
  */
@@ -99,6 +99,33 @@ function dtw_lr_map() {
     );
 }
 
+/**
+ * Dubbele oude producten van een model dat al een landing heeft (besluit eigenaar 2026-11-22: weg uit de winkel).
+ * Landing => product-ID's. Bewust een andere vorm dan dtw_lr_map(): die lijst blijft één product per landing.
+ */
+function dtw_lr_dubbel() {
+    return array(
+        'tuinkas-planet-2500' => array(5965),
+        'tuinkas-planet-5000' => array(4037),
+        'tuinkas-planet-6200' => array(4023),
+        'tuinkas-uranus-6700' => array(3953),
+        'tuinkas-apollo-3800' => array(3946),
+        'tuinkas-apollo-5000' => array(3933),
+        'tuinkas-triton-3800' => array(3909),
+    );
+}
+
+/** Alle producten die doorverwijzen: het product van de landing én de dubbele. Product-ID => slug. */
+function dtw_lr_alle() {
+    $alle = dtw_lr_map();
+    foreach (dtw_lr_dubbel() as $slug => $ids) {
+        foreach ($ids as $id) {
+            $alle[(int) $id] = $slug;
+        }
+    }
+    return $alle;
+}
+
 /** Slug => pagina-ID, alleen voor landings die bestaan en gepubliceerd zijn. */
 function dtw_lr_landing_ids() {
     static $ids = null;
@@ -126,7 +153,7 @@ add_action('template_redirect', function () {
     if (isset($_GET['oud'])) {
         return;
     }
-    $map = dtw_lr_map();
+    $map = dtw_lr_alle();
     $pid = (int) get_queried_object_id();
     if (!isset($map[$pid])) {
         return;
