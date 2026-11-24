@@ -3,7 +3,7 @@
  * Plugin Name: DTW Landing-doorverwijzing (mu, alleen staging)
  * Description: Stuurt de oude productpagina van modellen met een nieuwe landing door naar die landing, en haalt de landings uit de zoekresultaten zodat elk model één keer verschijnt. Werkt alleen op een host die met "staging." begint. Oude pagina bekijken: voeg ?oud=1 toe aan het productadres.
  * Author: Daan (web-dev-agent)
- * Version: 0.5.0
+ * Version: 0.5.1
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. Er wordt niets in de database gewijzigd.
  */
@@ -177,6 +177,37 @@ add_action('template_redirect', function () {
         $url = add_query_arg($args, $url);
     }
     wp_safe_redirect($url, dtw_lr_status());
+    exit;
+}, 1);
+
+/**
+ * Producten die uit de winkel zijn gehaald (op concept gezet): het oude adres verwijst door.
+ * Laatste deel van het oude adres (/product/<slug>/) => nieuw pad.
+ *  - Campus orangerie (24-11-2026): naar de Sirius, de kas met dezelfde maten.
+ *  - Tuinberging Berlin (22-11-2026): naar de categorie Tuinbergingen.
+ */
+function dtw_lr_uit_de_winkel() {
+    return array(
+        'vitavia-campus-orangerie-tuinkas' => '/tuinkas-sirius/',
+        'tuinberging-berlin'               => '/product-categorie/tuinbergingen-tuinhuizen/',
+    );
+}
+
+add_action('template_redirect', function () {
+    if (!dtw_lr_is_staging() || !is_404()) {
+        return;
+    }
+    $uri   = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+    $pad   = trim((string) parse_url($uri, PHP_URL_PATH), '/');
+    $delen = explode('/', $pad);
+    if (count($delen) !== 2 || $delen[0] !== 'product') {
+        return;
+    }
+    $map = dtw_lr_uit_de_winkel();
+    if (!isset($map[$delen[1]])) {
+        return;
+    }
+    wp_safe_redirect(home_url($map[$delen[1]]), dtw_lr_status());
     exit;
 }, 1);
 
