@@ -3,7 +3,7 @@
  * Plugin Name: DTW Titel en omschrijving (mu)
  * Description: Geeft pagina's een eigen titel en omschrijving voor zoekmachines via de velden dtw_seo_title en dtw_seo_desc (gevuld door WebDev/landings/publish.py en WebDev/home/build_categorie.py). Op een productcategorie en de winkelpagina gelden de velden van de pagina "cat-inhoud-<slug>". Is een veld leeg, dan blijft de instelling van Yoast gelden. Haalt daarnaast de oude productpagina's die naar een landing doorverwijzen uit de sitemap.
  * Author: Daan (web-dev-agent)
- * Version: 0.1.3
+ * Version: 0.1.4
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. De velden blijven staan maar doen dan niets.
  */
@@ -94,6 +94,71 @@ add_filter('wpseo_schema_webpage', function ($data) {
     }
     return $data;
 }, 99);
+
+/**
+ * De vaste zin "Bestel de ... tegen de beste prijzen online met gratis verzending" (standaardomschrijving voor producten
+ * in de instellingen van Yoast) gaat van alle productpagina's: bezorging is alleen gratis vanaf 100 euro en
+ * "de beste prijzen" is niet te onderbouwen (besluit marketing-manager 24-11-2026).
+ * De omschrijving voor delen (og:description) wordt gelijk aan de eigen omschrijving van het product; is die er niet, dan blijft het veld leeg.
+ */
+function dtw_seo_is_sjabloonzin($tekst) {
+    return is_string($tekst) && stripos($tekst, 'tegen de beste prijzen online met gratis verzending') !== false;
+}
+
+function dtw_seo_eigen_productomschrijving() {
+    if (!is_singular('product')) {
+        return '';
+    }
+    $tekst = trim((string) get_post_meta(get_queried_object_id(), '_yoast_wpseo_metadesc', true));
+    return dtw_seo_is_sjabloonzin($tekst) ? '' : $tekst;
+}
+
+add_filter('wpseo_metadesc', function ($tekst) {
+    return dtw_seo_is_sjabloonzin($tekst) ? dtw_seo_eigen_productomschrijving() : $tekst;
+}, 100);
+
+foreach (array('wpseo_opengraph_desc', 'wpseo_twitter_description') as $dtw_seo_filter) {
+    add_filter($dtw_seo_filter, function ($tekst) {
+        if (!is_singular('product')) {
+            return $tekst;
+        }
+        $eigen = dtw_seo_eigen_productomschrijving();
+        if ($eigen !== '') {
+            return $eigen;
+        }
+        return dtw_seo_is_sjabloonzin($tekst) ? '' : $tekst;
+    }, 100);
+}
+unset($dtw_seo_filter);
+
+add_filter('wpseo_schema_webpage', function ($data) {
+    if (is_array($data) && isset($data['description']) && dtw_seo_is_sjabloonzin($data['description'])) {
+        $eigen = dtw_seo_eigen_productomschrijving();
+        if ($eigen !== '') {
+            $data['description'] = $eigen;
+        } else {
+            unset($data['description']);
+        }
+    }
+    return $data;
+}, 100);
+
+/**
+ * De categorie Best sellers blijft bestaan maar hoort niet in Google (besluit marketing-manager 24-11-2026):
+ * "niet indexeren" op de pagina en niet in de sitemap.
+ */
+add_filter('wpseo_robots', function ($robots) {
+    return is_tax('product_cat', 'best-sellers') ? 'noindex, follow' : $robots;
+}, 100);
+
+add_filter('wpseo_exclude_from_sitemap_by_term_ids', function ($ids) {
+    $ids  = is_array($ids) ? $ids : array();
+    $term = get_term_by('slug', 'best-sellers', 'product_cat');
+    if ($term && !is_wp_error($term)) {
+        $ids[] = (int) $term->term_id;
+    }
+    return $ids;
+});
 
 /**
  * Hoofdkop (h1) op twee pagina's die het thema zonder kop toont:
