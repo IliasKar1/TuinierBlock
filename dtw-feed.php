@@ -3,7 +3,7 @@
  * Plugin Name: DTW Productfeed (mu)
  * Description: Eigen productfeed voor Google (/dtw-productfeed.xml) en het direct tonen van één uitvoering als die in de link staat (?variant=<nummer>): prijs, bestelknoppen en gestructureerde gegevens van die ene uitvoering. Zonder dat stuk in de link verandert er niets aan een pagina. Op productie pas actief als het bestand dtw-feed.flag in mu-plugins staat.
  * Author: Daan (web-dev-agent)
- * Version: 0.1.0
+ * Version: 0.1.1
  *
  * Uitzetten: het bestand dtw-feed.flag verwijderen (productie), of dit bestand verwijderen of hernoemen.
  * Er wordt niets in de database gewijzigd; de feed staat als bestand in uploads/dtw-feed/.
@@ -95,6 +95,22 @@ function dtw_feed_landing_schema($slug) {
                 $cache[$slug] = $d;
                 break;
             }
+        }
+    }
+    return $cache[$slug];
+}
+
+/** De varianten die op de landing te kiezen zijn (uit de keuzetabel in de pagina): variant-ID => true. Leeg als de pagina geen tabel heeft. */
+function dtw_feed_landing_varianten($slug) {
+    static $cache = array();
+    if (isset($cache[$slug])) {
+        return $cache[$slug];
+    }
+    $cache[$slug] = array();
+    $page = get_page_by_path($slug);
+    if ($page && preg_match('/var MATRIX = (\{.*\});/', (string) $page->post_content, $m) && preg_match_all('/variation_id=(\d+)/', $m[1], $alle)) {
+        foreach ($alle[1] as $id) {
+            $cache[$slug][(int) $id] = true;
         }
     }
     return $cache[$slug];
@@ -211,6 +227,14 @@ function dtw_feed_regel($product, $variant = null) {
     }
     if ((string) $item->get_price() === '') {
         return null;
+    }
+    if ($variant && $slug) {
+        // Een uitvoering die op de landing niet te kiezen is (bijvoorbeeld een kleur die er tijdelijk af is) hoort niet in de feed:
+        // de link zou de pagina met een andere prijs tonen.
+        $te_kiezen = dtw_feed_landing_varianten($slug);
+        if ($te_kiezen && !isset($te_kiezen[(int) $variant->get_id()])) {
+            return null;
+        }
     }
     $kleur = '';
     $titel = $naam;
