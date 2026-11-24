@@ -3,7 +3,7 @@
  * Plugin Name: DTW Titel en omschrijving (mu)
  * Description: Geeft pagina's een eigen titel en omschrijving voor zoekmachines via de velden dtw_seo_title en dtw_seo_desc (gevuld door WebDev/landings/publish.py en WebDev/home/build_categorie.py). Op een productcategorie en de winkelpagina gelden de velden van de pagina "cat-inhoud-<slug>". Is een veld leeg, dan blijft de instelling van Yoast gelden. Haalt daarnaast de oude productpagina's die naar een landing doorverwijzen uit de sitemap.
  * Author: Daan (web-dev-agent)
- * Version: 0.1.4
+ * Version: 0.1.5
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. De velden blijven staan maar doen dan niets.
  */
@@ -148,7 +148,14 @@ add_filter('wpseo_schema_webpage', function ($data) {
  * "niet indexeren" op de pagina en niet in de sitemap.
  */
 add_filter('wpseo_robots', function ($robots) {
-    return is_tax('product_cat', 'best-sellers') ? 'noindex, follow' : $robots;
+    if (is_tax('product_cat', 'best-sellers')) {
+        return 'noindex, follow';
+    }
+    // Merkpagina's met een of twee producten (besluit marketing-manager 24-11-2026 19:08); de merkpagina Vitavia blijft te indexeren.
+    if (is_tax('product_brand', array('globel', 'pergart'))) {
+        return 'noindex, follow';
+    }
+    return $robots;
 }, 100);
 
 add_filter('wpseo_exclude_from_sitemap_by_term_ids', function ($ids) {
@@ -156,6 +163,12 @@ add_filter('wpseo_exclude_from_sitemap_by_term_ids', function ($ids) {
     $term = get_term_by('slug', 'best-sellers', 'product_cat');
     if ($term && !is_wp_error($term)) {
         $ids[] = (int) $term->term_id;
+    }
+    foreach (array('globel', 'pergart') as $merk) {
+        $term = get_term_by('slug', $merk, 'product_brand');
+        if ($term && !is_wp_error($term)) {
+            $ids[] = (int) $term->term_id;
+        }
     }
     return $ids;
 });

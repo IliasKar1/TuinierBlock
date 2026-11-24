@@ -3,7 +3,7 @@
  * Plugin Name: DTW Landing-doorverwijzing (mu, alleen staging)
  * Description: Stuurt de oude productpagina van modellen met een nieuwe landing door naar die landing, en haalt de landings uit de zoekresultaten zodat elk model één keer verschijnt. Werkt alleen op een host die met "staging." begint. Oude pagina bekijken: voeg ?oud=1 toe aan het productadres.
  * Author: Daan (web-dev-agent)
- * Version: 0.5.2
+ * Version: 0.5.3
  *
  * Uitzetten: dit bestand verwijderen of hernoemen. Er wordt niets in de database gewijzigd.
  */
@@ -192,6 +192,23 @@ function dtw_lr_uit_de_winkel() {
         'vitavia-campus-orangerie'         => '/tuinkas-sirius/',                              // ouder adres, staat nog in de catalogus van Meta
         'tuinberging-berlin'               => '/product-categorie/tuinbergingen-tuinhuizen/',
         'toestel-huis-berlin-vd'           => '/product-categorie/tuinbergingen-tuinhuizen/',  // ouder adres, staat nog in de catalogus van Meta
+        // Oudere adressen uit de catalogus van Meta van modellen die we nog verkopen (besluit marketing-manager 24-11-2026 19:08).
+        'muurkas-ida-900'                      => '/muurkas-ida-900/',
+        'comet-kweekkas-2500'                  => '/tuinkas-comet-2500/',
+        'comet-kweekkas-3800'                  => '/tuinkas-comet-3800/',
+        'comet-kweekkas-5000'                  => '/tuinkas-comet-5000/',
+        'comet-kweekkas-6200'                  => '/tuinkas-comet-6200/',
+        'tuinkas-venus-3800-2'                 => '/tuinkas-venus-3800/',
+        'vitavia-triton-2500'                  => '/tuinkas-triton-2500/',
+        'vitavia-planet-3800'                  => '/tuinkas-planet-3800/',
+        'sirius-gewachshaus-besondere-modelle' => '/tuinkas-sirius/',
+        'premiumkas-fortuna'                   => '/tuinkas-fortuna/',
+        'fruhbeet-levana'                      => '/product/kweekbak-levana/',
+        // Oude seriepagina's: naar de categorie Tuinkassen.
+        'kweekkas-apollo'                      => '/product-categorie/tuinkas-kopen/',
+        'kweekkas-planet'                      => '/product-categorie/tuinkas-kopen/',
+        'kweekhuis-zeus'                       => '/product-categorie/tuinkas-kopen/',
+        'diana-kweekhuis'                      => '/product-categorie/tuinkas-kopen/',
     );
 }
 
