@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Plugin Name: DTW Meta-signalen (mu)
  * Description: Twee metingen voor Meta, via de browser (pixel) en via de server (Conversions API) met hetzelfde event-id, zodat Meta ze niet dubbel telt. (1) Contact bij een klik op een WhatsApp-knop: de offerteknop op de landings en de zwevende knop. (2) EchtBezoek op productpagina's en landings, na 60 seconden zichtbaar op de pagina en minstens 50% gescrold, één keer per paginabezoek. Het bestaande event "Click to Chat by HoliThemes" blijft ongemoeid. Op productie pas actief als het bestand dtw-meta-signalen.flag in mu-plugins staat.
