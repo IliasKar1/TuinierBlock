@@ -1,9 +1,9 @@
-<?php
+﻿<?php
 /**
  * Plugin Name: DTW Meta-signalen (mu)
  * Description: Twee metingen voor Meta, via de browser (pixel) en via de server (Conversions API) met hetzelfde event-id, zodat Meta ze niet dubbel telt. (1) Contact bij een klik op een WhatsApp-knop: de offerteknop op de landings en de zwevende knop. (2) EchtBezoek op productpagina's en landings, na 60 seconden zichtbaar op de pagina en minstens 50% gescrold, één keer per paginabezoek. Het bestaande event "Click to Chat by HoliThemes" blijft ongemoeid. Op productie pas actief als het bestand dtw-meta-signalen.flag in mu-plugins staat.
  * Author: Daan (web-dev-agent)
- * Version: 0.1.0
+ * Version: 0.1.1
  *
  * Besluit eigenaar 28-11-2026 00:12 ("Ja nu bouwen"), opdracht marketing-manager 27-11 23:56.
  * Instellingen staan bovenaan (DTW_MS_*). Uitzetten: het bestand dtw-meta-signalen.flag verwijderen (productie), of dit bestand verwijderen of hernoemen.
@@ -82,6 +82,7 @@ add_action('wp_footer', function () {
         'sec'     => DTW_MS_SECONDEN,
         'scroll'  => DTW_MS_SCROLL,
         'product' => ($soort === 'product') ? (string) get_the_ID() : '',
+        'test'    => strpos((string) wp_parse_url(home_url(), PHP_URL_HOST), 'staging.') === 0 && get_option('dtw_meta_test_code', '') !== '',
     );
     ?>
 <script id="dtw-meta-signalen" data-cfasync="false">
@@ -104,7 +105,25 @@ add_action('wp_footer', function () {
     } catch (e) {}
     try { fetch(C.url, { method: 'POST', body: body, keepalive: true, headers: { 'Content-Type': 'text/plain' } }); } catch (e) {}
   }
+  /* Toestemming: de site heeft (nog) geen eigen cookiebanner. We volgen de pixel: draait die (cookie _fbp of fbq aanwezig),
+     dan mag het signaal mee. Komt er later een banner die de pixel tegenhoudt tot er toestemming is, dan gaat hier vanzelf niets meer heen.
+     Op de testsite (geen pixel) alleen als er een testcode is gezet. */
+  function mag() {
+    if (typeof window.fbq === 'function' || /(?:^|;\s*)_fbp=/.test(document.cookie)) return true;
+    return !!C.test;
+  }
+  function productId() {
+    if (C.product) return C.product;
+    var el = document.querySelector('#twb-cta[data-c], [data-c*="add-to-cart="], a[href*="add-to-cart="]');
+    var s = el ? (el.getAttribute('data-c') || el.getAttribute('href') || '') : '';
+    var m = s.match(/add-to-cart=(\d+)/);
+    return m ? m[1] : '';
+  }
   function meld(naam, data, standaard) {
+    if (!mag()) return;
+    var pid = productId();
+    if (pid) { data.content_ids = [pid]; data.content_type = 'product'; }
+    data.content_name = document.title;
     var eid = id();
     viaPixel(naam, data, eid, standaard);
     viaServer(naam, data, eid);
@@ -122,7 +141,7 @@ add_action('wp_footer', function () {
     var nu = Date.now();
     if (nu - laatst < 3000) return;
     laatst = nu;
-    meld('Contact', { content_name: document.title, content_category: zwevend && !waLink ? 'whatsapp-zwevend' : 'whatsapp-offerte', page_type: C.soort }, true);
+    meld('Contact', { knop: zwevend && !waLink ? 'zwevend' : 'offerte' }, true);
   }, true);
 
   /* 2. EchtBezoek: productpagina of landing, 60 s zichtbaar en minstens 50% gescrold. */
@@ -143,9 +162,7 @@ add_action('wp_footer', function () {
     tel(); meet();
     if (tijd >= C.sec * 1000 && diepte >= C.scroll) {
       klaar = true;
-      var data = { page_type: soort, seconds: Math.round(tijd / 1000), scroll_percent: diepte, content_name: document.title };
-      if (C.product) { data.content_ids = [C.product]; data.content_type = 'product'; }
-      meld('EchtBezoek', data, false);
+      meld('EchtBezoek', { pagina: soort, seconden: Math.round(tijd / 1000), scroll_procent: diepte }, false);
     }
   }
   window.addEventListener('scroll', function () { meet(); }, { passive: true });
@@ -213,7 +230,7 @@ function dtw_ms_ontvang(WP_REST_Request $req) {
 
     // Alleen platte, korte waarden doorgeven.
     $custom = array();
-    foreach (array('content_name', 'content_category', 'page_type', 'seconds', 'scroll_percent', 'content_type') as $k) {
+    foreach (array('content_name', 'content_type', 'knop', 'pagina', 'seconden', 'scroll_procent') as $k) {
         if (isset($data[$k]) && is_scalar($data[$k])) {
             $custom[$k] = is_numeric($data[$k]) ? $data[$k] + 0 : substr(sanitize_text_field((string) $data[$k]), 0, 200);
         }
@@ -240,8 +257,14 @@ function dtw_ms_ontvang(WP_REST_Request $req) {
     if ($test !== '') {
         $payload['test_event_code'] = $test;
     }
+    // Toestemming aan de serverkant: alleen als de pixel bij deze bezoeker draait (cookie _fbp). Testsite met testcode uitgezonderd.
+    $testsite = strpos($eigen, 'staging.') === 0;
+    if (!isset($user['fbp']) && !($testsite && $test !== '')) {
+        return new WP_REST_Response(array('ok' => false, 'reden' => 'geen pixel, geen toestemming'), 200);
+    }
 
-    $regel = array('tijd' => current_time('mysql'), 'event' => $event, 'id' => $eid, 'url' => $url, 'fbp' => isset($user['fbp']) ? 'ja' : 'nee', 'test' => $test !== '' ? 'ja' : 'nee');
+    $regel = array('tijd' => current_time('mysql'), 'event' => $event, 'id' => $eid, 'url' => $url, 'fbp' => isset($user['fbp']) ? 'ja' : 'nee', 'test' => $test !== '' ? 'ja' : 'nee',
+                   'custom_data' => $custom);
     $token = dtw_ms_token();
     if ($token === '') {
         $regel['uitkomst'] = 'droog: geen toegangscode, niet verstuurd';
